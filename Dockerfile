@@ -1,4 +1,6 @@
-FROM golang:1.9.4-alpine3.7 AS builder
+# docker build -t chronolaw/registrator .
+
+FROM golang:1.14.14-alpine3.11 AS builder
 WORKDIR /go/src/github.com/gliderlabs/registrator/
 COPY . .
 RUN \
@@ -11,7 +13,7 @@ RUN \
 		-o bin/registrator \
 		.
 
-FROM alpine:3.7
+FROM alpine:3.11
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /go/src/github.com/gliderlabs/registrator/bin/registrator /bin/registrator
 
